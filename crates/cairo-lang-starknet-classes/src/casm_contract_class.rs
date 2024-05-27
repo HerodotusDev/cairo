@@ -1,4 +1,7 @@
 use std::cmp::Ordering;
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
 
 use cairo_felt::Felt252;
 use cairo_lang_casm::assembler::AssembledCairoProgram;
@@ -436,6 +439,33 @@ impl CasmContractClass {
             SierraToCasmConfig { gas_usage_check: true, max_bytecode_size },
         )?;
 
+        // Collect assembly instructions
+        let asm_content = cairo_program
+            .instructions
+            .iter()
+            .map(|i| i.to_string())
+            .collect::<Vec<String>>()
+            .join("\n");
+        write_to_file("contract.asm", &asm_content).unwrap();
+
+        // Collect instruction representations
+        let repr_content = cairo_program
+            .instructions
+            .iter()
+            .map(|i| format!("{:#?}", i.assemble()))
+            .collect::<Vec<String>>()
+            .join("\n");
+        write_to_file("contract.repr", &repr_content).unwrap();
+
+        // Collect bytecode
+        let bytecode_content = cairo_program
+            .instructions
+            .iter()
+            .map(|i| format!("{:#?}", i.assemble().encode()))
+            .collect::<Vec<String>>()
+            .join("\n");
+        write_to_file("contract.bytecode", &bytecode_content).unwrap();
+
         let AssembledCairoProgram { bytecode, hints } = cairo_program.assemble();
         let bytecode = bytecode
             .iter()
@@ -571,6 +601,13 @@ impl CasmContractClass {
 
         Ok((casm_contract_class, cairo_program.debug_info))
     }
+}
+
+// Helper function to write content to a file
+fn write_to_file<P: AsRef<Path>>(path: P, content: &str) -> std::io::Result<()> {
+    let mut file = File::create(path)?;
+    file.write_all(content.as_bytes())?;
+    Ok(())
 }
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Serialize, Deserialize)]
