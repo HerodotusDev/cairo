@@ -5,6 +5,9 @@ mod Factorial {
 
     #[external(v0)]
     fn factorial(ref self: ContractState) -> felt252 {
-        0xfffffff0f
+        let a = 0x1;
+        let b = 0x2;
+        let c = a * b;
+        c
     }
 }

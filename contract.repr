@@ -49,7 +49,7 @@ InstructionRepr {
     off1: -1,
     off2: 1,
     imm: Some(
-        73,
+        75,
     ),
     dst_register: FP,
     op0_register: FP,
@@ -305,7 +305,7 @@ InstructionRepr {
     off1: 1,
     off2: 1,
     imm: Some(
-        62,
+        64,
     ),
     dst_register: AP,
     op0_register: AP,
@@ -321,7 +321,7 @@ InstructionRepr {
     off1: -1,
     off2: 1,
     imm: Some(
-        61,
+        63,
     ),
     dst_register: AP,
     op0_register: AP,
@@ -413,7 +413,7 @@ InstructionRepr {
     off1: -1,
     off2: 1,
     imm: Some(
-        20,
+        22,
     ),
     dst_register: FP,
     op0_register: FP,
@@ -475,7 +475,7 @@ InstructionRepr {
     off1: -1,
     off2: 1,
     imm: Some(
-        68719476495,
+        1,
     ),
     dst_register: AP,
     op0_register: FP,
@@ -487,8 +487,24 @@ InstructionRepr {
     opcode: AssertEq,
 }
 InstructionRepr {
+    off0: 0,
+    off1: -1,
+    off2: 1,
+    imm: Some(
+        2,
+    ),
+    dst_register: AP,
+    op0_register: AP,
+    op1_addr: Imm,
+    res: Mul,
+    pc_update: Regular,
+    ap_update: Add1,
+    fp_update: Regular,
+    opcode: AssertEq,
+}
+InstructionRepr {
     off0: -1,
-    off1: -2,
+    off1: -3,
     off2: 0,
     imm: None,
     dst_register: AP,
@@ -502,7 +518,7 @@ InstructionRepr {
 }
 InstructionRepr {
     off0: 0,
-    off1: -10,
+    off1: -11,
     off2: 1,
     imm: Some(
         1,
@@ -519,7 +535,7 @@ InstructionRepr {
 InstructionRepr {
     off0: 0,
     off1: -1,
-    off2: -4,
+    off2: -5,
     imm: None,
     dst_register: AP,
     op0_register: FP,
@@ -563,7 +579,7 @@ InstructionRepr {
 InstructionRepr {
     off0: 0,
     off1: -1,
-    off2: -6,
+    off2: -7,
     imm: None,
     dst_register: AP,
     op0_register: FP,
@@ -576,7 +592,7 @@ InstructionRepr {
 }
 InstructionRepr {
     off0: 0,
-    off1: -7,
+    off1: -8,
     off2: 1,
     imm: Some(
         1,
