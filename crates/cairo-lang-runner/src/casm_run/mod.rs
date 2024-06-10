@@ -1023,40 +1023,42 @@ impl<'a> CairoHintProcessor<'a> {
         calldata: Vec<Felt252>,
         vm: &mut dyn VMWrapper,
     ) -> Result<SyscallResult, HintError> {
-        deduct_gas!(gas_counter, CALL_CONTRACT);
+        // deduct_gas!(gas_counter, CALL_CONTRACT);
 
-        // Get the class hash of the contract.
-        let Some(class_hash) = self.starknet_state.deployed_contracts.get(&contract_address) else {
-            fail_syscall!(b"CONTRACT_NOT_DEPLOYED");
-        };
+        // // Get the class hash of the contract.
+        // let Some(class_hash) = self.starknet_state.deployed_contracts.get(&contract_address) else {
+        //     fail_syscall!(b"CONTRACT_NOT_DEPLOYED");
+        // };
 
-        // Prepare runner for running the ctor.
-        let runner = self.runner.expect("Runner is needed for starknet.");
-        let contract_info = runner
-            .starknet_contracts_info
-            .get(class_hash)
-            .expect("Deployed contract not found in registry.");
+        // // Prepare runner for running the ctor.
+        // let runner = self.runner.expect("Runner is needed for starknet.");
+        // let contract_info = runner
+        //     .starknet_contracts_info
+        //     .get(class_hash)
+        //     .expect("Deployed contract not found in registry.");
 
-        // Call the function.
-        let Some(entry_point) = contract_info.externals.get(&selector) else {
-            fail_syscall!(b"ENTRYPOINT_NOT_FOUND");
-        };
+        // // Call the function.
+        // let Some(entry_point) = contract_info.externals.get(&selector) else {
+        //     fail_syscall!(b"ENTRYPOINT_NOT_FOUND");
+        // };
 
-        let old_addrs = self.starknet_state.open_caller_context((
-            contract_address.clone(),
-            self.starknet_state.exec_info.contract_address.clone(),
-        ));
-        let res = self.call_entry_point(gas_counter, runner, entry_point, calldata, vm);
-        self.starknet_state.close_caller_context(old_addrs);
+        // let old_addrs = self.starknet_state.open_caller_context((
+        //     contract_address.clone(),
+        //     self.starknet_state.exec_info.contract_address.clone(),
+        // ));
+        // let res = self.call_entry_point(gas_counter, runner, entry_point, calldata, vm);
+        // self.starknet_state.close_caller_context(old_addrs);
 
-        match res {
-            Ok((res_data_start, res_data_end)) => {
-                Ok(SyscallResult::Success(vec![res_data_start.into(), res_data_end.into()]))
-            }
-            Err(mut revert_reason) => {
-                fail_syscall!(revert_reason, b"ENTRYPOINT_FAILED");
-            }
-        }
+        // match res {
+        //     Ok((res_data_start, res_data_end)) => {
+        //         Ok(SyscallResult::Success(vec![res_data_start.into(), res_data_end.into()]))
+        //     }
+        //     Err(mut revert_reason) => {
+        //         fail_syscall!(revert_reason, b"ENTRYPOINT_FAILED");
+        //     }
+        // }
+        
+        Ok(SyscallResult::Success(vec![contract_address.into()]))
     }
 
     /// Executes the `library_call_syscall` syscall.
